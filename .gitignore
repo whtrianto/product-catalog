@@ -1,0 +1,54 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build / production
+dist/
+build/
+.next/
+out/
+
+# Logs
+logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Dependency directories (PHP / Laravel kalau ada)
+vendor/
+
+# Cache
+.cache/
+.tmp/
+
+# Testing
+coverage/
+
+# Misc
+*.zip
+*.tar
+*.gz
+
+# XAMPP / local server (optional)
+htdocs/
+
+# Database (optional, kalau ada file dump)
+*.sql

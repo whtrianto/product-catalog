@@ -2,7 +2,7 @@
 
 This project implements a dynamic product catalog page featuring cascading dropdown filters. It is built strictly using **React Router DOM v6** (with the Data API), **Vite**, and **Tailwind CSS**. No external state management or form libraries were used.
 
-## 🚀 Features
+## Features
 
 - **Data Router approach:** Utilizes `createBrowserRouter` and route `loader` functions to simulate data fetching and compute exact data payloads.
 - **URL-first State Management:** The entire application state (category, subcategory, brand filters) is synchronized with URL Search Parameters. This ensures complete state persistence across browser reloads.
@@ -13,7 +13,7 @@ This project implements a dynamic product catalog page featuring cascading dropd
   - Content wrapping list is utilizing a semantic `<section>` HTML tag.
 - **Modern aesthetics & UI:** Vibrant colors, responsive adjustments, subtle glassmorphism effects, and highly readable `Inter` typography. Micro-animations included on hover effects.
 
-## 📦 Running Locally
+## Running Locally
 
 1. Install dependencies:
    ```bash
@@ -24,7 +24,7 @@ This project implements a dynamic product catalog page featuring cascading dropd
    npm run dev
    ```
 
-## 📸 Visual Documentation
+## Visual Documentation
 
 *(Please replace the placeholders below with the actual screenshots from the app execution)*
 
@@ -46,7 +46,7 @@ This project implements a dynamic product catalog page featuring cascading dropd
 
 ![Brand Filtering Screenshot](placeholder_brand_state.png)
 
-## 🏢 Architecture & Problem-Solving Approach
+## Architecture & Problem-Solving Approach
 
 1. **State Management:** The approach favored the URL being the single source of truth over `useState`. Whenever a user triggers a dropdown `onChange`, it fires React Router's `setSearchParams`, which seamlessly replaces the URL.
 2. **Data Loading (React Router `loader`):**
