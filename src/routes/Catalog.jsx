@@ -7,36 +7,49 @@ import {
   Laptop, Smartphone, Shirt, Footprints
 } from 'lucide-react';
 
+/**
+ * Loader Function: Berjalan SEBELUM komponen dirender.
+ * Berfungsi untuk mengambil parameter dari URL dan memfilter data dummy
+ * sesuai dengan pilihan Category, Sub-Category, dan Brand.
+ */
 export function loader({ request }) {
   const url = new URL(request.url);
+  // Mengambil ID dari URL search parameters (?category=...&subcategory=...)
   const categoryId = url.searchParams.get('category') || '';
   const subCategoryId = url.searchParams.get('subcategory') || '';
   const brandId = url.searchParams.get('brand') || '';
 
   const categories = dummyData.categories;
   
+  // Logika Cascading 1: Ambil Sub-Category berdasarkan Category yang dipilih
   let subCategories = [];
   if (categoryId) {
     subCategories = dummyData.subCategories.filter(s => s.categoryId === categoryId);
   }
 
+  // Logika Cascading 2: Ambil Brand berdasarkan Sub-Category yang dipilih
   let brands = [];
   if (subCategoryId) {
     brands = dummyData.brands.filter(b => b.subCategoryId === subCategoryId);
   }
 
+  // Logika Filtering Produk:
   let products = dummyData.products;
   if (brandId) {
+    // Jika Brand dipilih, tampilkan produk dari brand tersebut saja
     products = products.filter(p => p.brandId === brandId);
   } else if (subCategoryId) {
+    // Jika baru Sub-Category yang dipilih, tampilkan semua produk dari semua brand di sub-kategori ini
     const brandIds = dummyData.brands.filter(b => b.subCategoryId === subCategoryId).map(b => b.id);
     products = products.filter(p => brandIds.includes(p.brandId));
   } else if (categoryId) {
+    // Jika baru Category yang dipilih, tampilkan semua produk dari semua sub-kategori di kategori ini
     const subCatIds = dummyData.subCategories.filter(s => s.categoryId === categoryId).map(s => s.id);
     const brandIds = dummyData.brands.filter(b => subCatIds.includes(b.subCategoryId)).map(b => b.id);
     products = products.filter(p => brandIds.includes(p.brandId));
   }
 
+  // Mengembalikan data hasil filter ke komponen
   return { 
     categories, 
     subCategories, 
@@ -95,9 +108,15 @@ function FilterStep({ number, isActive, isCompleted }) {
 }
 
 export default function Catalog() {
+  // Mengambil data dari loader (hasil filter)
   const { categories, subCategories, brands, products, selections } = useLoaderData();
+  // Hook untuk membaca dan menulis parameter URL
   const [searchParams, setSearchParams] = useSearchParams();
 
+  /**
+   * Handler saat Kategori berubah:
+   * Menghapus semua filter lain (Sub-Category & Brand) karena tidak lagi relevan.
+   */
   const handleCategoryChange = (e) => {
     const newParams = new URLSearchParams();
     if (e.target.value) {
@@ -106,9 +125,13 @@ export default function Catalog() {
     setSearchParams(newParams, { replace: true });
   };
 
+  /**
+   * Handler saat Sub-Kategori berubah:
+   * Menghapus filter Brand karena brand lama mungkin tidak ada di sub-kategori baru.
+   */
   const handleSubCategoryChange = (e) => {
     const newParams = new URLSearchParams(searchParams);
-    newParams.delete('brand');
+    newParams.delete('brand'); // Reset brand
     if (e.target.value) {
       newParams.set('subcategory', e.target.value);
     } else {
@@ -117,6 +140,10 @@ export default function Catalog() {
     setSearchParams(newParams, { replace: true });
   };
 
+  /**
+   * Handler saat Brand berubah:
+   * Hanya mengupdate parameter brand di URL.
+   */
   const handleBrandChange = (e) => {
     const newParams = new URLSearchParams(searchParams);
     if (e.target.value) {
@@ -127,14 +154,19 @@ export default function Catalog() {
     setSearchParams(newParams, { replace: true });
   };
 
+  /**
+   * Mengosongkan semua filter (Kembali ke Default)
+   */
   const handleReset = () => {
     setSearchParams({}, { replace: true });
   };
 
+  // Mencari Nama dari ID yang terpilih (untuk tampilan breadcrumb/judul)
   const catName = useMemo(() => categories.find(c => c.id === selections.categoryId)?.name, [categories, selections.categoryId]);
   const subCatName = useMemo(() => subCategories.find(s => s.id === selections.subCategoryId)?.name, [subCategories, selections.subCategoryId]);
   const brandName = useMemo(() => brands.find(b => b.id === selections.brandId)?.name, [brands, selections.brandId]);
 
+  // Cek apakah ada filter yang sedang aktif
   const hasFilters = selections.categoryId || selections.subCategoryId || selections.brandId;
 
   return (
