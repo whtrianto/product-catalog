@@ -8,11 +8,11 @@
   }
 
   body {
-    @apply bg-surface-950 text-gray-100 font-sans antialiased;
+    @apply bg-[#fdfcfb] text-[#3d362f] font-sans antialiased;
     background-image: 
-      radial-gradient(at 20% 20%, rgba(99, 102, 241, 0.08) 0px, transparent 60%),
-      radial-gradient(at 80% 80%, rgba(168, 85, 247, 0.06) 0px, transparent 60%),
-      radial-gradient(at 50% 50%, rgba(34, 211, 238, 0.04) 0px, transparent 60%);
+      radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.06) 0px, transparent 60%),
+      radial-gradient(at 100% 0%, rgba(245, 158, 11, 0.05) 0px, transparent 60%),
+      radial-gradient(at 50% 100%, rgba(139, 92, 246, 0.04) 0px, transparent 60%);
     background-attachment: fixed;
   }
 
@@ -25,10 +25,10 @@
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-surface-950;
+    @apply bg-[#f9f7f5];
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-surface-800 rounded-full;
+    @apply bg-[#d4ccc4] rounded-full;
   }
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-accent-500;
@@ -38,46 +38,49 @@
 @layer components {
   /* ===== GLASS PANELS ===== */
   .glass-panel {
-    @apply bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] shadow-2xl;
+    @apply bg-white/80 backdrop-blur-2xl border border-[#f0ece8]/80;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
   }
 
   .glass-panel-hover {
     @apply glass-panel transition-all duration-500 ease-out;
   }
   .glass-panel-hover:hover {
-    @apply bg-white/[0.07] border-white/[0.14] shadow-[0_8px_40px_-12px_rgba(99,102,241,0.25)];
+    @apply bg-white/95 border-[#e5dfd9]/60;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.06), 0 24px 64px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
   }
 
   /* ===== COMBOBOX / SELECT ===== */
   .combobox {
-    @apply block w-full rounded-2xl bg-white/[0.06] border border-white/[0.1]
-      text-gray-200 py-3 px-4 text-sm font-medium
+    @apply block w-full rounded-2xl bg-[#f9f7f5]/80 border border-[#e5dfd9]/60
+      text-[#5c5248] py-3 px-4 text-sm font-medium
       transition-all duration-300 ease-out
-      focus:bg-white/[0.1] focus:border-accent-500/50 focus:ring-2 focus:ring-accent-500/20 focus:outline-none
+      focus:bg-white focus:border-accent-400/60 focus:ring-2 focus:ring-accent-400/20 focus:outline-none
       disabled:opacity-30 disabled:cursor-not-allowed
       appearance-none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23818cf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%237c3aed' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     background-size: 18px;
   }
 
   .combobox option {
-    @apply bg-surface-900 text-gray-200;
+    @apply bg-white text-[#5c5248];
   }
 
   .combobox-label {
-    @apply block text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2;
+    @apply block text-xs font-semibold uppercase tracking-widest text-[#b8aea4] mb-2;
   }
 
   /* ===== BUTTONS ===== */
   .btn-primary {
     @apply inline-flex items-center justify-center rounded-2xl
-      bg-gradient-to-r from-accent-500 to-purple-500
+      bg-gradient-to-r from-accent-500 to-accent-600
       px-6 py-3 text-sm font-bold text-white
-      shadow-lg shadow-accent-500/25
+      shadow-lg shadow-accent-500/20
       transition-all duration-300
-      hover:shadow-xl hover:shadow-accent-500/40 hover:-translate-y-0.5 hover:brightness-110
+      hover:shadow-xl hover:shadow-accent-500/30 hover:-translate-y-0.5 hover:brightness-110
       active:translate-y-0 active:shadow-md
       focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500
       w-full;
@@ -85,12 +88,12 @@
 
   .btn-secondary {
     @apply inline-flex items-center justify-center rounded-2xl
-      bg-white/[0.06] border border-white/[0.1]
-      px-6 py-3 text-sm font-semibold text-gray-300
+      bg-[#f9f7f5]/80 border border-[#e5dfd9]/60
+      px-6 py-3 text-sm font-semibold text-[#9a8e82]
       transition-all duration-300
-      hover:bg-white/[0.1] hover:border-white/[0.2] hover:text-white hover:-translate-y-0.5
+      hover:bg-white hover:border-accent-300/50 hover:text-accent-600 hover:-translate-y-0.5 hover:shadow-xl
       active:translate-y-0
-      focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600
+      focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4ccc4]
       w-full;
   }
 
@@ -118,9 +121,9 @@
   /* ===== FILTER CHIP ===== */
   .filter-chip {
     @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold
-      bg-accent-500/10 text-accent-400 border border-accent-500/20
+      bg-accent-500/10 text-accent-600 border border-accent-400/20
       transition-all duration-300
-      hover:bg-accent-500/20 hover:border-accent-500/40;
+      hover:bg-accent-500/20 hover:border-accent-400/40;
   }
 
   /* ===== BADGE ===== */
@@ -129,12 +132,12 @@
   }
 
   .badge-brand {
-    @apply badge bg-white/[0.06] text-gray-400 border border-white/[0.08]
+    @apply badge bg-[#f9f7f5] text-[#b8aea4] border border-[#f0ece8]
       transition-all duration-300;
   }
 
   .product-card:hover .badge-brand {
-    @apply bg-accent-500/10 text-accent-400 border-accent-500/20;
+    @apply bg-accent-500/10 text-accent-600 border-accent-400/20;
   }
 
   /* ===== FLOATING ORBS (Decoration) ===== */
@@ -145,14 +148,14 @@
 
 @layer utilities {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-400 via-purple-400 to-neon-pink;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-500 via-accent-400 to-gold-500;
   }
 
   .text-gradient-subtle {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#3d362f] to-[#9a8e82];
   }
 
   .border-gradient {
-    border-image: linear-gradient(to right, rgba(99,102,241,0.3), rgba(168,85,247,0.3), rgba(244,114,182,0.3)) 1;
+    border-image: linear-gradient(to right, rgba(124,58,237,0.2), rgba(245,158,11,0.2), rgba(139,92,246,0.2)) 1;
   }
 }

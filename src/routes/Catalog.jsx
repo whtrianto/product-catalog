@@ -59,27 +59,27 @@ export function loader({ request }) {
   };
 }
 
-// Gradient palettes for product cards
+// Gradient palettes for product cards — lighter, more vibrant for light theme
 const cardGradients = [
-  'from-indigo-600/30 via-purple-600/20 to-blue-600/10',
-  'from-cyan-600/30 via-teal-600/20 to-emerald-600/10',
-  'from-pink-600/30 via-rose-600/20 to-red-600/10',
-  'from-amber-600/30 via-orange-600/20 to-yellow-600/10',
-  'from-violet-600/30 via-fuchsia-600/20 to-pink-600/10',
-  'from-emerald-600/30 via-green-600/20 to-lime-600/10',
-  'from-blue-600/30 via-indigo-600/20 to-violet-600/10',
-  'from-rose-600/30 via-pink-600/20 to-fuchsia-600/10',
+  'from-violet-200/60 via-purple-100/40 to-indigo-100/30',
+  'from-cyan-200/60 via-teal-100/40 to-emerald-100/30',
+  'from-pink-200/60 via-rose-100/40 to-red-100/30',
+  'from-amber-200/60 via-orange-100/40 to-yellow-100/30',
+  'from-fuchsia-200/60 via-violet-100/40 to-purple-100/30',
+  'from-emerald-200/60 via-green-100/40 to-lime-100/30',
+  'from-blue-200/60 via-indigo-100/40 to-violet-100/30',
+  'from-rose-200/60 via-pink-100/40 to-fuchsia-100/30',
 ];
 
 const iconColors = [
-  'text-indigo-400',
-  'text-cyan-400',
-  'text-pink-400',
-  'text-amber-400',
-  'text-violet-400',
-  'text-emerald-400',
-  'text-blue-400',
-  'text-rose-400',
+  'text-violet-500',
+  'text-cyan-600',
+  'text-pink-500',
+  'text-amber-600',
+  'text-fuchsia-500',
+  'text-emerald-600',
+  'text-blue-500',
+  'text-rose-500',
 ];
 
 function getProductIcon(name) {
@@ -97,10 +97,10 @@ function FilterStep({ number, isActive, isCompleted }) {
       flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold
       transition-all duration-300
       ${isCompleted 
-        ? 'bg-accent-500 text-white shadow-lg shadow-accent-500/30' 
+        ? 'bg-accent-500 text-white shadow-lg shadow-accent-500/25' 
         : isActive 
-          ? 'bg-accent-500/20 text-accent-400 border border-accent-500/40'
-          : 'bg-white/[0.06] text-gray-500 border border-white/[0.08]'}
+          ? 'bg-accent-500/10 text-accent-600 border border-accent-400/40'
+          : 'bg-surface-100 text-surface-400 border border-surface-300'}
     `}>
       {isCompleted ? '✓' : number}
     </div>
@@ -173,19 +173,19 @@ export default function Catalog() {
     <div className="min-h-screen relative overflow-hidden">
       
       {/* ===== ANIMATED BACKGROUND ORBS ===== */}
-      <div className="orb w-[600px] h-[600px] bg-indigo-600/20 -top-48 -left-48 animate-float" />
-      <div className="orb w-[500px] h-[500px] bg-purple-600/15 top-1/3 -right-32 animate-float-delayed" />
-      <div className="orb w-[400px] h-[400px] bg-cyan-600/10 bottom-0 left-1/4 animate-pulse-slow" />
+      <div className="orb w-[600px] h-[600px] bg-violet-400/15 -top-48 -left-48 animate-float" />
+      <div className="orb w-[500px] h-[500px] bg-amber-300/10 top-1/3 -right-32 animate-float-delayed" />
+      <div className="orb w-[400px] h-[400px] bg-purple-300/10 bottom-0 left-1/4 animate-pulse-slow" />
 
       {/* ===== HEADER ===== */}
-      <header className="sticky top-0 z-50 bg-surface-950/60 backdrop-blur-2xl border-b border-white/[0.06]">
+      <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-2xl border-b border-surface-200/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <div className="flex items-center gap-3 animate-slide-in">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-accent-500 to-purple-500 rounded-xl blur-lg opacity-50" />
-                <div className="relative bg-gradient-to-br from-accent-500 to-purple-600 text-white p-2.5 rounded-xl shadow-lg">
+                <div className="absolute inset-0 bg-gradient-to-r from-accent-500 to-gold-500 rounded-xl blur-lg opacity-40" />
+                <div className="relative bg-gradient-to-br from-accent-500 to-accent-600 text-white p-2.5 rounded-xl shadow-lg shadow-accent-500/20">
                   <Layers className="w-5 h-5" />
                 </div>
               </div>
@@ -193,31 +193,31 @@ export default function Catalog() {
                 <h1 className="text-lg font-display font-bold text-gradient">
                   Premium Catalog
                 </h1>
-                <p className="text-[10px] font-medium text-gray-500 tracking-widest uppercase hidden sm:block">
+                <p className="text-[10px] font-medium text-surface-400 tracking-widest uppercase hidden sm:block">
                   Curated Collection
                 </p>
               </div>
             </div>
             
             {/* Breadcrumb */}
-            <nav className="product-breadcrumb hidden md:flex items-center text-sm font-medium text-gray-400" aria-label="breadcrumb">
-              <span className="hover:text-white transition-colors cursor-pointer">Home</span>
-              <ChevronRight className="w-3.5 h-3.5 mx-2 text-gray-600" />
-              <span className={!catName ? "text-accent-400 font-semibold" : "hover:text-white transition-colors cursor-pointer"}>
+            <nav className="product-breadcrumb hidden md:flex items-center text-sm font-medium text-surface-400" aria-label="breadcrumb">
+              <span className="hover:text-surface-800 transition-colors cursor-pointer">Home</span>
+              <ChevronRight className="w-3.5 h-3.5 mx-2 text-surface-300" />
+              <span className={!catName ? "text-accent-600 font-semibold" : "hover:text-surface-800 transition-colors cursor-pointer"}>
                 {catName || 'All Categories'}
               </span>
               {subCatName && (
                 <>
-                  <ChevronRight className="w-3.5 h-3.5 mx-2 text-gray-600" />
-                  <span className={!brandName ? "text-accent-400 font-semibold" : "hover:text-white transition-colors cursor-pointer"}>
+                  <ChevronRight className="w-3.5 h-3.5 mx-2 text-surface-300" />
+                  <span className={!brandName ? "text-accent-600 font-semibold" : "hover:text-surface-800 transition-colors cursor-pointer"}>
                     {subCatName}
                   </span>
                 </>
               )}
               {brandName && (
                 <>
-                  <ChevronRight className="w-3.5 h-3.5 mx-2 text-gray-600" />
-                  <span className="text-accent-400 font-semibold">{brandName}</span>
+                  <ChevronRight className="w-3.5 h-3.5 mx-2 text-surface-300" />
+                  <span className="text-accent-600 font-semibold">{brandName}</span>
                 </>
               )}
             </nav>
@@ -246,25 +246,25 @@ export default function Catalog() {
               {/* Filter Header */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="bg-accent-500/10 p-2 rounded-xl border border-accent-500/20">
-                    <Filter className="w-4 h-4 text-accent-400" />
+                  <div className="bg-accent-500/10 p-2 rounded-xl border border-accent-400/20">
+                    <Filter className="w-4 h-4 text-accent-500" />
                   </div>
                   <div>
-                    <h2 className="font-display text-base font-bold text-white">Filters</h2>
-                    <p className="text-[10px] text-gray-500 font-medium">Narrow results</p>
+                    <h2 className="font-display text-base font-bold text-surface-800">Filters</h2>
+                    <p className="text-[10px] text-surface-400 font-medium">Narrow results</p>
                   </div>
                 </div>
                 {hasFilters && (
                   <button 
                     onClick={handleReset}
-                    className="text-xs text-gray-500 hover:text-accent-400 transition-colors font-medium"
+                    className="text-xs text-surface-400 hover:text-accent-500 transition-colors font-medium"
                   >
                     Clear
                   </button>
                 )}
               </div>
 
-              <div className="h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+              <div className="h-px bg-gradient-to-r from-transparent via-surface-200 to-transparent" />
 
               {/* Filter Steps with visual flow */}
               <div className="space-y-5">
@@ -290,7 +290,7 @@ export default function Catalog() {
 
                 {/* Visual connector line */}
                 <div className="flex items-center pl-3">
-                  <div className={`w-px h-4 transition-colors duration-300 ${selections.categoryId ? 'bg-accent-500/40' : 'bg-white/[0.06]'}`} />
+                  <div className={`w-px h-4 transition-colors duration-300 ${selections.categoryId ? 'bg-accent-400/40' : 'bg-surface-200'}`} />
                 </div>
 
                 {/* Sub-Category */}
@@ -316,7 +316,7 @@ export default function Catalog() {
 
                 {/* Visual connector line */}
                 <div className="flex items-center pl-3">
-                  <div className={`w-px h-4 transition-colors duration-300 ${selections.subCategoryId ? 'bg-accent-500/40' : 'bg-white/[0.06]'}`} />
+                  <div className={`w-px h-4 transition-colors duration-300 ${selections.subCategoryId ? 'bg-accent-400/40' : 'bg-surface-200'}`} />
                 </div>
 
                 {/* Brand */}
@@ -341,7 +341,7 @@ export default function Catalog() {
                 </div>
               </div>
 
-              <div className="h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+              <div className="h-px bg-gradient-to-r from-transparent via-surface-200 to-transparent" />
 
               {/* Reset Button */}
               <button
@@ -349,14 +349,14 @@ export default function Catalog() {
                 onClick={handleReset}
                 className="btn-secondary group"
               >
-                <RefreshCw className="w-4 h-4 mr-2 text-gray-500 group-hover:text-accent-400 group-hover:rotate-180 transition-all duration-500" />
+                <RefreshCw className="w-4 h-4 mr-2 text-surface-400 group-hover:text-accent-500 group-hover:rotate-180 transition-all duration-500" />
                 Reset Filter
               </button>
 
               {/* Active Filters Summary */}
               {hasFilters && (
                 <div className="space-y-2 animate-fade-in">
-                  <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Active Filters</p>
+                  <p className="text-[10px] uppercase tracking-widest text-surface-400 font-bold">Active Filters</p>
                   <div className="flex flex-wrap gap-2">
                     {catName && <span className="filter-chip">{catName}</span>}
                     {subCatName && <span className="filter-chip">{subCatName}</span>}
@@ -374,8 +374,8 @@ export default function Catalog() {
             <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4 animate-slide-up">
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <Sparkles className="w-4 h-4 text-accent-400" />
-                  <span className="text-xs font-bold uppercase tracking-widest text-accent-400">
+                  <Sparkles className="w-4 h-4 text-accent-500" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-accent-500">
                     {hasFilters ? 'Filtered Results' : 'Explore'}
                   </span>
                 </div>
@@ -384,11 +384,11 @@ export default function Catalog() {
                 </h2>
               </div>
               <div className="glass-panel rounded-2xl px-4 py-2 flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-sm font-semibold text-gray-300">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-sm font-semibold text-surface-700">
                   {products.length}
                 </span>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-surface-400">
                   {products.length === 1 ? 'item' : 'items'}
                 </span>
               </div>
@@ -398,13 +398,13 @@ export default function Catalog() {
               /* ===== EMPTY STATE ===== */
               <div className="glass-panel rounded-3xl p-16 flex flex-col items-center justify-center text-center animate-fade-in">
                 <div className="relative mb-6">
-                  <div className="absolute inset-0 bg-accent-500/20 rounded-full blur-2xl" />
-                  <div className="relative bg-white/[0.06] p-6 rounded-full border border-white/[0.1]">
-                    <ShoppingBag className="w-12 h-12 text-gray-500" />
+                  <div className="absolute inset-0 bg-accent-500/10 rounded-full blur-2xl" />
+                  <div className="relative bg-surface-100 p-6 rounded-full border border-surface-200">
+                    <ShoppingBag className="w-12 h-12 text-surface-400" />
                   </div>
                 </div>
-                <h3 className="font-display text-xl font-bold text-white mb-3">No products found</h3>
-                <p className="text-gray-400 max-w-sm text-sm leading-relaxed">
+                <h3 className="font-display text-xl font-bold text-surface-800 mb-3">No products found</h3>
+                <p className="text-surface-400 max-w-sm text-sm leading-relaxed">
                   We couldn't find anything matching your current filters. Try resetting or selecting a different category.
                 </p>
                 <button 
@@ -433,18 +433,18 @@ export default function Catalog() {
                       style={{ animationDelay: `${index * 80}ms`, animationFillMode: 'both' }}
                     >
                       {/* Glow effect on hover */}
-                      <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-accent-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-accent-500/20 group-hover:via-purple-500/20 group-hover:to-pink-500/20 transition-all duration-700 -z-10 blur-sm" />
+                      <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-accent-500/0 via-gold-400/0 to-accent-400/0 group-hover:from-accent-500/15 group-hover:via-gold-400/10 group-hover:to-accent-400/15 transition-all duration-700 -z-10 blur-sm" />
 
                       {/* Card Image Area */}
                       <div className="card-image">
                         <div className={`gradient-bg bg-gradient-to-br ${gradientClass}`} />
                         {/* Mesh pattern overlay */}
-                        <div className="absolute inset-0 opacity-[0.03]" 
-                          style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}
+                        <div className="absolute inset-0 opacity-[0.04]" 
+                          style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.15) 1px, transparent 0)', backgroundSize: '24px 24px' }}
                         />
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="relative">
-                            <div className={`absolute inset-0 ${iconColorClass} blur-2xl opacity-30 group-hover:opacity-60 transition-opacity duration-500`}>
+                            <div className={`absolute inset-0 ${iconColorClass} blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500`}>
                               <ProductIcon className="w-20 h-20" strokeWidth={1} />
                             </div>
                             <ProductIcon className={`relative w-16 h-16 ${iconColorClass} group-hover:scale-110 transition-all duration-500`} strokeWidth={1.2} />
@@ -452,8 +452,8 @@ export default function Catalog() {
                         </div>
 
                         {/* Floating action button */}
-                        <button className="absolute top-3 right-3 bg-white/[0.08] backdrop-blur-xl border border-white/[0.1] p-2 rounded-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:bg-white/[0.15]">
-                          <Heart className="w-4 h-4 text-gray-300 hover:text-pink-400 transition-colors" />
+                        <button className="absolute top-3 right-3 bg-white/70 backdrop-blur-xl border border-surface-200/60 p-2 rounded-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:bg-white shadow-lg">
+                          <Heart className="w-4 h-4 text-surface-400 hover:text-rose-500 transition-colors" />
                         </button>
                       </div>
 
@@ -465,25 +465,25 @@ export default function Catalog() {
                           </span>
                           <div className="flex items-center gap-0.5">
                             {[...Array(5)].map((_, i) => (
-                              <Star key={i} className="w-3 h-3 text-amber-400/60 fill-amber-400/60" />
+                              <Star key={i} className="w-3 h-3 text-amber-400 fill-amber-400" />
                             ))}
                           </div>
                         </div>
 
-                        <h3 className="font-display text-base font-bold text-white leading-snug mb-1 group-hover:text-gradient transition-all duration-300">
+                        <h3 className="font-display text-base font-bold text-surface-800 leading-snug mb-1 group-hover:text-gradient transition-all duration-300">
                           {product.name}
                         </h3>
-                        <p className="text-xs text-gray-500 mb-4">Premium Quality Product</p>
+                        <p className="text-xs text-surface-400 mb-4">Premium Quality Product</p>
 
-                        <div className="mt-auto flex items-end justify-between pt-4 border-t border-white/[0.06]">
+                        <div className="mt-auto flex items-end justify-between pt-4 border-t border-surface-200/60">
                           <div>
-                            <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wider mb-0.5">Price</p>
-                            <p className="text-lg font-display font-bold text-white">
-                              <span className="text-xs text-gray-400 font-normal mr-0.5">Rp</span>
+                            <p className="text-[10px] font-medium text-surface-400 uppercase tracking-wider mb-0.5">Price</p>
+                            <p className="text-lg font-display font-bold text-surface-900">
+                              <span className="text-xs text-surface-400 font-normal mr-0.5">Rp</span>
                               {product.price.toLocaleString('id-ID')}
                             </p>
                           </div>
-                          <button className="flex items-center gap-1.5 bg-gradient-to-r from-accent-500 to-purple-500 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-accent-500/20 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:shadow-xl hover:shadow-accent-500/40 hover:brightness-110">
+                          <button className="flex items-center gap-1.5 bg-gradient-to-r from-accent-500 to-accent-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-accent-500/15 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:shadow-xl hover:shadow-accent-500/30 hover:brightness-110">
                             <ShoppingBag className="w-3.5 h-3.5" />
                             Add
                           </button>
@@ -499,12 +499,12 @@ export default function Catalog() {
             {products.length > 0 && (
               <div className="mt-12 glass-panel rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 animate-fade-in">
                 <div className="flex items-center gap-4">
-                  <div className="bg-gradient-to-br from-accent-500/20 to-purple-500/20 p-3 rounded-2xl border border-accent-500/20">
-                    <Zap className="w-6 h-6 text-accent-400" />
+                  <div className="bg-gradient-to-br from-accent-500/10 to-gold-400/10 p-3 rounded-2xl border border-accent-400/20">
+                    <Zap className="w-6 h-6 text-accent-500" />
                   </div>
                   <div>
-                    <h3 className="font-display font-bold text-white text-lg">Looking for more?</h3>
-                    <p className="text-sm text-gray-400">Explore our full collection of premium products.</p>
+                    <h3 className="font-display font-bold text-surface-800 text-lg">Looking for more?</h3>
+                    <p className="text-sm text-surface-400">Explore our full collection of premium products.</p>
                   </div>
                 </div>
                 <button className="btn-primary max-w-xs group whitespace-nowrap">
@@ -518,14 +518,14 @@ export default function Catalog() {
       </main>
 
       {/* ===== FOOTER ===== */}
-      <footer className="relative mt-16 border-t border-white/[0.04]">
+      <footer className="relative mt-16 border-t border-surface-200/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <Layers className="w-4 h-4 text-accent-400" />
+              <Layers className="w-4 h-4 text-accent-500" />
               <span className="text-sm font-display font-bold text-gradient">Premium Catalog</span>
             </div>
-            <p className="text-xs text-gray-600">
+            <p className="text-xs text-surface-400">
               © 2026 Premium Catalog. Crafted with precision.
             </p>
           </div>

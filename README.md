@@ -26,23 +26,21 @@ This project implements a dynamic product catalog page featuring cascading dropd
 
 ## Visual Documentation
 
-*(Please replace the placeholders below with the actual screenshots from the app execution)*
-
 ### 1. Initial State (No Filters Selected)
 
-*Description: Initial load displays all products. Only the Category dropdown is enabled.*
+_Description: Initial load displays all products. Only the Category dropdown is enabled._
 
 ![Initial State Screenshot](placeholder_initial_state.png)
 
 ### 2. Cascading Selection (Category & Sub-Category)
 
-*Description: A category is chosen. The Sub-category dropdown is unlocked and appropriately populated. Products list refines.*
+_Description: A category is chosen. The Sub-category dropdown is unlocked and appropriately populated. Products list refines._
 
 ![Cascading Sub-Category Screenshot](placeholder_subcat_state.png)
 
 ### 3. Fully Filtered State
 
-*Description: Brand is selected. UI is completely matched to user's selections including the Breadcrumb trailing trail.*
+_Description: Brand is selected. UI is completely matched to user's selections including the Breadcrumb trailing trail._
 
 ![Brand Filtering Screenshot](placeholder_brand_state.png)
 
@@ -53,6 +51,6 @@ This project implements a dynamic product catalog page featuring cascading dropd
    - By executing route loaders, it perfectly intercepts the search parameters early in the component lifecycle.
    - The loader intelligently constructs the required state payloads (categories array, subCategories array, brands array, and mapped out products array), performing filtering algorithms securely and sending down exactly what the UI needs without taxing component rendering.
 3. **Data Cascading Mechanics:**
-   - Subcategories array is restricted by matching `.categoryId`. 
+   - Subcategories array is restricted by matching `.categoryId`.
    - When parameter updates occur, higher-level dropdowns correctly purge their downstream values to not establish ghost query states. (e.g. changing Category successfully strips Brand from the URL params).
 4. **Code Quality:** Leveraging React built-ins like `useMemo` inside the main component efficiently computes the complex breadcrumb resolutions without re-running on unaffected re-renders. Component functions are properly modularized. Everything conforms strictly to best practices for a Vite+React ecosystem.
