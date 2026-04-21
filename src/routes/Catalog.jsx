@@ -1,16 +1,20 @@
 import React, { useMemo } from 'react';
 import { useLoaderData, useSearchParams } from 'react-router-dom';
 import { dummyData } from '../data';
-import { 
-  Filter, ChevronRight, RefreshCw, ShoppingBag, Tag, Cpu, 
+import {
+  Filter, ChevronRight, RefreshCw, ShoppingBag, Tag, Cpu,
   Layers, Sparkles, ArrowRight, Zap, Star, Heart,
   Laptop, Smartphone, Shirt, Footprints
 } from 'lucide-react';
 
 /**
- * Loader Function: Berjalan SEBELUM komponen dirender.
- * Berfungsi untuk mengambil parameter dari URL dan memfilter data dummy
- * sesuai dengan pilihan Category, Sub-Category, dan Brand.
+ * LOADER FUNCTION: Menangani pengambilan data (Data Fetching) secara efisien.
+ * Fungsi ini berjalan di sisi client/server SEBELUM komponen dirender.
+ * 
+ * Alur Kerjanya:
+ * 1. Mendeteksi parameter filter (Active Filter) langsung dari URL (URL Search Params).
+ * 2. Menyaring data dummy (Product, Sub-Category, Brand) berdasarkan hirarki tertentu.
+ * 3. Memungkinkan fitur "Share URL" - jika link dibagikan, filter tetap aktif.
  */
 export function loader({ request }) {
   const url = new URL(request.url);
@@ -20,7 +24,7 @@ export function loader({ request }) {
   const brandId = url.searchParams.get('brand') || '';
 
   const categories = dummyData.categories;
-  
+
   // Logika Cascading 1: Ambil Sub-Category berdasarkan Category yang dipilih
   let subCategories = [];
   if (categoryId) {
@@ -49,16 +53,20 @@ export function loader({ request }) {
     products = products.filter(p => brandIds.includes(p.brandId));
   }
 
-  // Mengembalikan data hasil filter ke komponen
-  return { 
-    categories, 
-    subCategories, 
-    brands, 
-    products, 
-    selections: { categoryId, subCategoryId, brandId } 
+  // Mengembalikan data hasil filter ke komponen untuk ditampilkan di UI
+  return {
+    categories,
+    subCategories,
+    brands,
+    products,
+    selections: { categoryId, subCategoryId, brandId }
   };
 }
 
+/**
+ * DEKORASI VISUAL: Array warna dan icon.
+ * Memberikan identitas unik pada tiap kartu produk secara dinamis berdasarkan index atau nama.
+ */
 // Gradient palettes for product cards — lighter, more vibrant for light theme
 const cardGradients = [
   'from-violet-200/60 via-purple-100/40 to-indigo-100/30',
@@ -96,9 +104,9 @@ function FilterStep({ number, isActive, isCompleted }) {
     <div className={`
       flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold
       transition-all duration-300
-      ${isCompleted 
-        ? 'bg-accent-500 text-white shadow-lg shadow-accent-500/25' 
-        : isActive 
+      ${isCompleted
+        ? 'bg-accent-500 text-white shadow-lg shadow-accent-500/25'
+        : isActive
           ? 'bg-accent-500/10 text-accent-600 border border-accent-400/40'
           : 'bg-surface-100 text-surface-400 border border-surface-300'}
     `}>
@@ -108,14 +116,17 @@ function FilterStep({ number, isActive, isCompleted }) {
 }
 
 export default function Catalog() {
-  // Mengambil data dari loader (hasil filter)
+  // 1. DATA HOOK: Mengambil data yang sudah diproses oleh Loader di atas
   const { categories, subCategories, brands, products, selections } = useLoaderData();
-  // Hook untuk membaca dan menulis parameter URL
+
+  // 2. SEARCH PARAMS HOOK: Mengelola state aplikasi langsung melalui URL
+  // Keuntungan: User bisa menggunakan tombol 'Back' di browser untuk kembali ke filter sebelumnya
   const [searchParams, setSearchParams] = useSearchParams();
 
   /**
-   * Handler saat Kategori berubah:
-   * Menghapus semua filter lain (Sub-Category & Brand) karena tidak lagi relevan.
+   * HANDLER - PERUBAHAN KATEGORI (Level 1)
+   * Saat kategori berubah, kita harus mereset Sub-Kategori dan Brand
+   * karena mereka memiliki ketergantungan (Dependency) pada kategori induknya.
    */
   const handleCategoryChange = (e) => {
     const newParams = new URLSearchParams();
@@ -131,7 +142,9 @@ export default function Catalog() {
    */
   const handleSubCategoryChange = (e) => {
     const newParams = new URLSearchParams(searchParams);
-    newParams.delete('brand'); // Reset brand
+    // Kita hapus Brand saat Sub-Kategori berubah untuk mencegah data yang tidak valid
+    newParams.delete('brand');
+
     if (e.target.value) {
       newParams.set('subcategory', e.target.value);
     } else {
@@ -166,22 +179,22 @@ export default function Catalog() {
   const subCatName = useMemo(() => subCategories.find(s => s.id === selections.subCategoryId)?.name, [subCategories, selections.subCategoryId]);
   const brandName = useMemo(() => brands.find(b => b.id === selections.brandId)?.name, [brands, selections.brandId]);
 
-  // Cek apakah ada filter yang sedang aktif
+  // Cek apakah ada filter yang sedang aktif untuk menampilkan tombol 'Reset' atau 'Indicator'
   const hasFilters = selections.categoryId || selections.subCategoryId || selections.brandId;
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      
+
       {/* ===== ANIMATED BACKGROUND ORBS ===== */}
       <div className="orb w-[600px] h-[600px] bg-violet-400/15 -top-48 -left-48 animate-float" />
       <div className="orb w-[500px] h-[500px] bg-amber-300/10 top-1/3 -right-32 animate-float-delayed" />
       <div className="orb w-[400px] h-[400px] bg-purple-300/10 bottom-0 left-1/4 animate-pulse-slow" />
 
-      {/* ===== HEADER ===== */}
+      {/* ===== HEADER & NAVIGATION ===== */}
       <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-2xl border-b border-surface-200/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
+            {/* Logo dan Branding */}
             <div className="flex items-center gap-3 animate-slide-in">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-accent-500 to-gold-500 rounded-xl blur-lg opacity-40" />
@@ -198,8 +211,8 @@ export default function Catalog() {
                 </p>
               </div>
             </div>
-            
-            {/* Breadcrumb */}
+
+            {/* Breadcrumb: Menunjukkan path/posisi user saat ini dalam hirarki kategori */}
             <nav className="product-breadcrumb hidden md:flex items-center text-sm font-medium text-surface-400" aria-label="breadcrumb">
               <span className="hover:text-surface-800 transition-colors cursor-pointer">Home</span>
               <ChevronRight className="w-3.5 h-3.5 mx-2 text-surface-300" />
@@ -238,11 +251,11 @@ export default function Catalog() {
       {/* ===== MAIN CONTENT ===== */}
       <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+
           {/* ===== SIDEBAR / FILTER PANEL ===== */}
           <aside className="lg:col-span-3 animate-slide-in">
             <div className="glass-panel rounded-3xl p-6 sticky top-28 space-y-6">
-              
+
               {/* Filter Header */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
@@ -255,9 +268,9 @@ export default function Catalog() {
                   </div>
                 </div>
                 {hasFilters && (
-                  <button 
+                  <button
                     onClick={handleReset}
-                    className="text-xs text-surface-400 hover:text-accent-500 transition-colors font-medium"
+                    className="text-xs text-red-400 hover:text-accent-500 transition-colors font-medium"
                   >
                     Clear
                   </button>
@@ -393,7 +406,7 @@ export default function Catalog() {
                 </span>
               </div>
             </div>
-          
+
             {products.length === 0 ? (
               /* ===== EMPTY STATE ===== */
               <div className="glass-panel rounded-3xl p-16 flex flex-col items-center justify-center text-center animate-fade-in">
@@ -407,8 +420,8 @@ export default function Catalog() {
                 <p className="text-surface-400 max-w-sm text-sm leading-relaxed">
                   We couldn't find anything matching your current filters. Try resetting or selecting a different category.
                 </p>
-                <button 
-                  onClick={handleReset} 
+                <button
+                  onClick={handleReset}
                   className="mt-8 btn-primary max-w-xs group"
                 >
                   <RefreshCw className="w-4 h-4 mr-2 group-hover:rotate-180 transition-transform duration-500" />
@@ -422,14 +435,15 @@ export default function Catalog() {
                   const gradientClass = cardGradients[index % cardGradients.length];
                   const iconColorClass = iconColors[index % iconColors.length];
                   const ProductIcon = getProductIcon(product.name);
-                  const brandLabel = brands.find(b => b.id === product.brandId)?.name 
-                    || dummyData.brands.find(b => b.id === product.brandId)?.name 
+                  const brandLabel = brands.find(b => b.id === product.brandId)?.name
+                    || dummyData.brands.find(b => b.id === product.brandId)?.name
                     || 'Brand';
 
                   return (
-                    <div 
+                    <div
                       key={product.id}
                       className="product-card group animate-slide-up"
+                      // Delays animasi dibuat dinamis agar muncul satu per satu (Staggered Animation)
                       style={{ animationDelay: `${index * 80}ms`, animationFillMode: 'both' }}
                     >
                       {/* Glow effect on hover */}
@@ -439,7 +453,7 @@ export default function Catalog() {
                       <div className="card-image">
                         <div className={`gradient-bg bg-gradient-to-br ${gradientClass}`} />
                         {/* Mesh pattern overlay */}
-                        <div className="absolute inset-0 opacity-[0.04]" 
+                        <div className="absolute inset-0 opacity-[0.04]"
                           style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.15) 1px, transparent 0)', backgroundSize: '24px 24px' }}
                         />
                         <div className="absolute inset-0 flex items-center justify-center">
@@ -496,7 +510,7 @@ export default function Catalog() {
             )}
 
             {/* ===== BOTTOM CTA ===== */}
-            {products.length > 0 && (
+            {/* {products.length > 0 && (
               <div className="mt-12 glass-panel rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 animate-fade-in">
                 <div className="flex items-center gap-4">
                   <div className="bg-gradient-to-br from-accent-500/10 to-gold-400/10 p-3 rounded-2xl border border-accent-400/20">
@@ -512,7 +526,7 @@ export default function Catalog() {
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
-            )}
+            )} */}
           </section>
         </div>
       </main>

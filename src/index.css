@@ -2,11 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * SISTEM DESAIN CUSTOM
+ * Menggunakan Tailwind CSS sebagai engine, namun dengan desain token kustom
+ * untuk menciptakan estetika "Premium & Light Luxury".
+ */
+
 @layer base {
   *, *::before, *::after {
     @apply box-border;
   }
 
+  /* Pengaturan latar belakang global dengan Mesh Gradient yang halus */
   body {
     @apply bg-[#fdfcfb] text-[#3d362f] font-sans antialiased;
     background-image: 
@@ -20,7 +27,7 @@
     @apply bg-accent-500 text-white;
   }
 
-  /* Custom Scrollbar */
+  /* Kustomisasi Scrollbar agar selaras dengan desain minimalis */
   ::-webkit-scrollbar {
     width: 6px;
   }
@@ -36,7 +43,10 @@
 }
 
 @layer components {
-  /* ===== GLASS PANELS ===== */
+  /* 
+     GLASS PANELS (Glassmorphism): 
+     Memberikan efek semi-transparan (blur) yang memberikan kedalaman pada UI.
+  */
   .glass-panel {
     @apply bg-white/80 backdrop-blur-2xl border border-[#f0ece8]/80;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
@@ -51,7 +61,11 @@
     transform: translateY(-4px);
   }
 
-  /* ===== COMBOBOX / SELECT ===== */
+  /* 
+     COMBOBOX / SELECT: 
+     UI input select yang dikustomisasi penuh agar terlihat modern 
+     dibandingkan select standard browser.
+  */
   .combobox {
     @apply block w-full rounded-2xl bg-[#f9f7f5]/80 border border-[#e5dfd9]/60
       text-[#5c5248] py-3 px-4 text-sm font-medium
@@ -140,7 +154,10 @@
     @apply bg-accent-500/10 text-accent-600 border-accent-400/20;
   }
 
-  /* ===== FLOATING ORBS (Decoration) ===== */
+  /* 
+     FLOATING ORBS: 
+     Elemen dekoratif di latar belakang yang memberikan kesan futuristik.
+  */
   .orb {
     @apply absolute rounded-full blur-3xl opacity-20 pointer-events-none;
   }
